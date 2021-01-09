@@ -1,0 +1,514 @@
+[
+    {
+        "model": "service.Service",
+        "pk": 1,
+        "fields": {
+            "name": "СТО"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 2,
+        "fields": {
+            "name": "Кузовные работы"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 3,
+        "fields": {
+            "name": "Замена масла и жидкостей"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 4,
+        "fields": {
+            "name": "Автозапчасти"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 5,
+        "fields": {
+            "name": "Доп оборудования и тюнинг"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 6,
+        "fields": {
+            "name": "Установка газа на авто"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 7,
+        "fields": {
+            "name": "Эвакуатор и другая помощь"
+        }
+    },
+    {
+        "model": "service.Service",
+        "pk": 8,
+        "fields": {
+            "name": "Шиномонтаж/выездной шиномонтаж"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 1,
+        "fields": {
+            "name": "Ремонт двигателя и навесного",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 2,
+        "fields": {
+            "name": "Ремонт ходовой/подвески/геометрия",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 3,
+        "fields": {
+            "name": "Ремонт топливной системы",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 4,
+        "fields": {
+            "name": "Услуги автоэлектрика",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 5,
+        "fields": {
+            "name": "Компьютерная диагностика",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 6,
+        "fields": {
+            "name": "Трансмиссия (АКПП/МКПП)",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 7,
+        "fields": {
+            "name": "Ремонт печка/кондиционер/радиатор",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 8,
+        "fields": {
+            "name": "Рулевой механизм",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 9,
+        "fields": {
+            "name": "Ремонт стекол",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 10,
+        "fields": {
+            "name": "Ремонт турбин",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 11,
+        "fields": {
+            "name": "Сварочные/токарные работы",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 12,
+        "fields": {
+            "name": "Тормозная система",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 13,
+        "fields": {
+            "name": "Другое",
+            "service": "1"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 14,
+        "fields": {
+            "name": "Ремонт деталей по кузову",
+            "service": "2"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 15,
+        "fields": {
+            "name": "Покраска",
+            "service": "2"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 16,
+        "fields": {
+            "name": "Полировка",
+            "service": "2"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 17,
+        "fields": {
+            "name": "Удаление вмятин без покраски",
+            "service": "2"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 18,
+        "fields": {
+            "name": "Замена масло в двигателе",
+            "service": "3"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 19,
+        "fields": {
+            "name": "Замена масло в коробке АКПП/МКПП",
+            "service": "3"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 20,
+        "fields": {
+            "name": "Замена антифриза",
+            "service": "3"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 21,
+        "fields": {
+            "name": "Замена/заправка фреона",
+            "service": "3"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 22,
+        "fields": {
+            "name": "Замена тормозной жидкости",
+            "service": "3"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 23,
+        "fields": {
+            "name": "Кузовные детали",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 24,
+        "fields": {
+            "name": "Запчасти по ходовке",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 25,
+        "fields": {
+            "name": "Оптика/свет",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 26,
+        "fields": {
+            "name": "Стекла",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 27,
+        "fields": {
+            "name": "Шины",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 28,
+        "fields": {
+            "name": "Диски",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 29,
+        "fields": {
+            "name": "Двигатели и детали",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 30,
+        "fields": {
+            "name": "Трансмиссия (АКПП/МКПП)",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 31,
+        "fields": {
+            "name": "Расходники/жидкости",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 32,
+        "fields": {
+            "name": "Мультимедия/акустика/камеры",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 33,
+        "fields": {
+            "name": "Аксессуары",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 34,
+        "fields": {
+            "name": "Аккумуляторы",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 35,
+        "fields": {
+            "name": "Другое",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 36,
+        "fields": {
+            "name": "Запчасти для ГБО",
+            "service": "4"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 37,
+        "fields": {
+            "name": "Сигнализация",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 38,
+        "fields": {
+            "name": "Тонировка",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 39,
+        "fields": {
+            "name": "Перетяжка салона/ Пошив чехлов",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 40,
+        "fields": {
+            "name": "Шумоизоляция",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 41,
+        "fields": {
+            "name": "Химчистка салона",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 42,
+        "fields": {
+            "name": "Перетяжка панели",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 43,
+        "fields": {
+            "name": "Автозвук",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 44,
+        "fields": {
+            "name": "Жидкое стекло",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 45,
+        "fields": {
+            "name": "Бронирование/плёнка",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 46,
+        "fields": {
+            "name": "Тюнинг для кузова",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 47,
+        "fields": {
+            "name": "Ксенон",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 48,
+        "fields": {
+            "name": "Двигатель, чип тюнинг",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 49,
+        "fields": {
+            "name": "Установка парктроников",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 50,
+        "fields": {
+            "name": "Другое",
+            "service": "5"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 51,
+        "fields": {
+            "name": "Эвакуатор",
+            "service": "7"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 52,
+        "fields": {
+            "name": "Отогрев",
+            "service": "7"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 53,
+        "fields": {
+            "name": "Вскрытие замков",
+            "service": "7"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 54,
+        "fields": {
+            "name": "Изготовление ключей",
+            "service": "7"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 55,
+        "fields": {
+            "name": "Другое",
+            "service": "7"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 56,
+        "fields": {
+            "name": "Шиномонтаж",
+            "service": "8"
+        }
+    },
+    {
+        "model": "service.SubService",
+        "pk": 57,
+        "fields": {
+            "name": "Выездной шиномонтаж",
+            "service": "8"
+        }
+    }
+]
