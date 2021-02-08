@@ -18,15 +18,19 @@ class CarApi(APIView):
         return Response(s.data)
 
     def post(self, request):
-        s = CarSer(data=request.data)
+        s = CreateCarSer(data=request.data)
         if s.is_valid():
-            Car.objects.create(
+            c = Car.objects.create(
                 name = s.validated_data['name'],
                 year = s.validated_data['year'],
                 size = s.validated_data['size'],
                 milage = s.validated_data['milage'],
                 user = request.user
             )
+            for i in s.validated_data['images']:
+                Image.objects.create(
+                    image = i, car = c
+                )
             return Response({'status': 'ok'})
         else:
             return Response(s.errors)

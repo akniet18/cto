@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar_url', read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'phone', 'avatar', 'email', 'nickname')
+        fields = ('id', 'phone', 'avatar', 'email', 'nickname', 'second_phone', 'third_phone')
         read_only_fields = ('id', 'phone')
 
     def get_avatar_url(self, obj):
@@ -22,4 +22,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChangeAvaSer(serializers.Serializer):
-    avatar = serializers.FileField()
+    avatar = serializers.FileField(required=False)
+    nickname = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    second_phone = serializers.CharField(required=False)
+    third_phone = serializers.CharField(required=False)

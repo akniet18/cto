@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'service',
     'order',
     'users',
+    'autoservice',
 
     'rest_framework',
     'rest_framework.authtoken',

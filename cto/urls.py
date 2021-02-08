@@ -21,5 +21,6 @@ urlpatterns = [
     path('cars/', include('cars.urls')),
     path('services/', include('service.urls')),
     path('order/', include('order.urls')),
-    path('users/', include('users.urls'))
+    path('users/', include('users.urls')),
+    path('cto/', include('autoservice.urls'))
 ]

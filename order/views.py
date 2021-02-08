@@ -29,13 +29,17 @@ class OrderApi(APIView):
     def post(self, request):
         s = OrderCreateSer(data=request.data)
         if s.is_valid():
-            Order.objects.create(
+            order = Order.objects.create(
                 car = Car.objects.get(id=s.validated_data['car_id']),
                 about = s.validated_data['about'],
                 service = Service.objects.get(id=s.validated_data['service_id']),
                 subservice = SubService.objects.get(id=s.validated_data['subservice_id']),
                 owner = request.user
             )
+            for i in s.validated_data['images']:
+                Image.objects.create(
+                    image=i, order=order
+                )
             return Response({'status': 'ok'})
         else:
             return Response(s.errors)
@@ -63,4 +67,13 @@ class OrderRequestApi(APIView):
     def get(self, request, id):
         orq = OrderRequest.objects.filter(order=id)
         s = OrderRequestSer(orq, many=True)
+        return Response(s.data)
+
+
+class History(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        order = Order.objects.filter(is_finished=True, owner=request.user)
+        s = OrderSer(order, mnay=True)
         return Response(s.data)

@@ -55,6 +55,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     birth_date = models.DateField(null=True, blank=True,
                                 auto_now=False,
                                 auto_now_add=False)
+    second_phone = models.CharField(max_length=15, blank=True, null=True)
+    third_phone = models.CharField(max_length=15, blank=True, null=True)
     # gender = models.SmallIntegerField(choices=GENDER_CHOICES,
     #                                   null=True, blank=True)
 

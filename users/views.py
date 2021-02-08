@@ -94,10 +94,13 @@ class UserApi(APIView):
         return Response(s.data)
 
     def post(self, request, id):
-        s = UserSerializer(data=request.data)
+        s = ChangeAvaSer(data=request.data)
         if s.is_valid():
             user = User.objects.get(id=id)
-            user.nickname = s.validated_data['nickname']
+            user.nickname = s.validated_data.get('nickame', user.nickname)
+            user.second_phone = s.validated_data.get('second_phone', user.second_phone)
+            user.third_phone = s.validated_data.get('third_phone', user.third_phone)
+            user.email = s.validated_data.get('third_phone', user.email)
             user.save()
             return Response({'status': 'ok'})
         else:

@@ -28,7 +28,7 @@ class Car(models.Model):
 
 
 def photos_dir(instanse, filename):
-    usrnme = f'{instanse.name}'
+    usrnme = f'{instanse.car.name}'
     folder_name = f"{usrnme}/{filename}"
     return folder_name
 class Image(models.Model):

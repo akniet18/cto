@@ -13,13 +13,16 @@ class Order(models.Model):
 
     price = models.BigIntegerField(blank=True, null=True)
 
+    lat = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
+
     def __str__(self):
         return f'{self.id} {self.car.name}'
 
 
 
 def photos_dir(instanse, filename):
-    usrnme = f'{instanse.name}'
+    usrnme = f'{instanse.order.car.name}'
     folder_name = f"{usrnme}/{filename}"
     return folder_name
 class Image(models.Model):
