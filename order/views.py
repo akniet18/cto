@@ -75,5 +75,5 @@ class History(APIView):
 
     def get(self, request):
         order = Order.objects.filter(is_finished=True, owner=request.user)
-        s = OrderSer(order, mnay=True)
+        s = OrderSer(order, many=True)
         return Response(s.data)
