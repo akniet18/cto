@@ -18,4 +18,4 @@ class CreateCarSer(serializers.Serializer):
     year = serializers.IntegerField()
     size = serializers.FloatField()
     milage = serializers.FloatField()
-    images = serializers.ListField(child = serializers.FileField())
+    # images = CarImg(many=True)

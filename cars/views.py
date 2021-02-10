@@ -27,7 +27,11 @@ class CarApi(APIView):
                 milage = s.validated_data['milage'],
                 user = request.user
             )
-            for i in s.validated_data['images']:
+            imgs = request.FILES.getlist('images')
+            # print(imgs)
+            # print(type(s.validated_data['images']), s.validated_data['images'])
+            for i in imgs:
+                # print(type(i))
                 Image.objects.create(
                     image = i, car = c
                 )
