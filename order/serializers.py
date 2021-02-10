@@ -26,7 +26,6 @@ class OrderCreateSer(serializers.Serializer):
     subservice_id = serializers.IntegerField()
     # owner_id = serializers.IntegerField()
     about = serializers.CharField()
-    images = serializers.ListField(child=serializers.FileField())
 
 
 class OrderRequestSer(serializers.ModelSerializer):

@@ -36,7 +36,8 @@ class OrderApi(APIView):
                 subservice = SubService.objects.get(id=s.validated_data['subservice_id']),
                 owner = request.user
             )
-            for i in s.validated_data['images']:
+            imgs = request.FILES.getlist('images')
+            for i in imgs:
                 Image.objects.create(
                     image=i, order=order
                 )
