@@ -23,7 +23,7 @@ class OrderApi(APIView):
 
     def get(self, request):
         orders=Order.objects.filter(is_finished=False, in_work=False)
-        s = OrderSer(orders, many=True)
+        s = OrderSer(orders, many=True, context={'request': request})
         return Response(s.data)
 
     def post(self, request):
@@ -53,6 +53,7 @@ class CreateOrderRequestApi(APIView):
         s = OrderRequestSer(data=request.data)
         if s.is_valid():
             OrderRequest.objects.create(
+                cto = request.user,
                 order = s.validated_data['order'],
                 price = s.validated_data['price'],
                 time = s.validated_data['time']
@@ -65,11 +66,31 @@ class CreateOrderRequestApi(APIView):
 class OrderRequestApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request, id):
-        orq = OrderRequest.objects.filter(order=id)
-        s = OrderRequestSer(orq, many=True)
+    def get(self, request):
+        orq = OrderRequest.objects.filter(order__owner=request.user)
+        s = OrderRequestSer(orq, many=True, context={'request': request})
         return Response(s.data)
 
+
+class RequestDecline(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, id):
+        queryset = OrderRequest.objects.get(id=id)
+        queryset.delete()
+        return Response({'status': 'ok'})
+
+
+class RequestAccept(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, id):
+        queryset = OrderRequest.objects.get(id=id)
+        queryset.order.in_work = True
+        queryset.order.price = queryset.price
+        queryset.order.cto = queryset.cto
+        queryset.order.save()
+        return Response({'status': 'ok'})
 
 class History(APIView):
     permission_classes = (permissions.IsAuthenticated,)

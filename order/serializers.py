@@ -5,9 +5,12 @@ from service.serializers import ServiceSer
 
 
 class OrderImg(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField('get_avatar_url')
     class Meta:
         model = Image
         fields = ('image',)
+    def get_avatar_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.image.url)
 
         
 class OrderSer(serializers.ModelSerializer):
@@ -27,8 +30,16 @@ class OrderCreateSer(serializers.Serializer):
     # owner_id = serializers.IntegerField()
     about = serializers.CharField()
 
+class CTOSer(serializers.Serializer):
+    phone = serializers.CharField()
+    cto_name = serializers.CharField()
+    cto_logo = serializers.SerializerMethodField('get_avatar_url', read_only=True)
+
+    def get_avatar_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.cto_logo.url)
 
 class OrderRequestSer(serializers.ModelSerializer):
+    cto = CTOSer(read_only=True)
     class Meta:
         model = OrderRequest
         fields = "__all__"

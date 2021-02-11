@@ -27,3 +27,8 @@ class ChangeAvaSer(serializers.Serializer):
     email = serializers.CharField(required=False)
     second_phone = serializers.CharField(required=False)
     third_phone = serializers.CharField(required=False)
+
+class CreateCtoSer(serializers.Serializer):
+    logo = serializers.FileField(required=False)
+    name = serializers.CharField(required=False)
+    phone = serializers.CharField(required=False)

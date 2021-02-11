@@ -39,5 +39,14 @@ class CarApi(APIView):
         else:
             return Response(s.errors)
 
+    
+    def delete(self, request):
+        s = CarIdSer(data=request.data)
+        if s.is_valid():
+            Car.objects.get(id=s.validated_data['id']).delete()
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors)
+
 
 

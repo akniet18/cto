@@ -12,6 +12,7 @@ class Order(models.Model):
     in_work = models.BooleanField(default=False)
 
     price = models.BigIntegerField(blank=True, null=True)
+    cto = models.ForeignKey("users.User", on_delete=models.CASCADE, blank=True, null=True, related_name="order_cto")
 
     lat = models.FloatField(blank=True, null=True)
     lng = models.FloatField(blank=True, null=True)
@@ -37,6 +38,7 @@ class OrderRequest(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     price = models.BigIntegerField()
     time = models.FloatField()
+    cto = models.ForeignKey("users.User", on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f'{self.id} {self.price}'

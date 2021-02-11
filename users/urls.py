@@ -6,5 +6,7 @@ urlpatterns = [
     path("code/", Register.as_view()),
 
     path("detail/<id>", UserApi.as_view()),
-    path('change/avatar/', ChangeAvatar.as_view())
+    path('change/avatar/', ChangeAvatar.as_view()),
+
+    path('create/autoservice/', CreateCto.as_view())
 ]

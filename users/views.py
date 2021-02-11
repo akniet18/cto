@@ -121,4 +121,32 @@ class ChangeAvatar(APIView):
             return Response({'status': "ok"})
         else:
             return Response(s.errors)
+
+
+class CreateCto(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        s = CreateCtoSer(data=request.data)
+        if s.is_valid():
+            phone = s.validated_data['phone']
+            if phone[0] != "+":
+                phone = "+" + phone
+            cto = User.objects.filter(phone = phone)
+            if cto.exists():
+                cto = cto[0]
+                if cto.cto_name != None:
+                    cto.cto_name = s.validated_data['name']
+                    cto.cto_logo = s.validated_data['logo']
+                    cto.save()
+                return Response({'status': 'phone already exists'})
+            else:
+                User.objects.create(
+                    phone = phone,
+                    cto_name=s.validated_data['name'],
+                    cto_logo = s.validated_data['logo']
+                )
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors)
         

@@ -57,55 +57,31 @@ class User(AbstractBaseUser, PermissionsMixin):
                                 auto_now_add=False)
     second_phone = models.CharField(max_length=15, blank=True, null=True)
     third_phone = models.CharField(max_length=15, blank=True, null=True)
-    # gender = models.SmallIntegerField(choices=GENDER_CHOICES,
-    #                                   null=True, blank=True)
+
 
     # ------------------------------------------------------
     # country = models.ForeignKey("locations.Country", on_delete=models.CASCADE, blank=True, null=True)
     # region = models.ForeignKey("locations.Region", on_delete=models.CASCADE, blank=True, null=True)
     # city = models.ForeignKey("locations.City", on_delete=models.CASCADE, blank=True, null=True)
 
-
-    # -------------------------------------------------------
-    # like = models.ManyToManyField("self", blank=True, related_name="likes")
-    # dislike = models.ManyToManyField("self", blank=True, related_name="dislikes")
-
-
-    # first_name = models.CharField(max_length=255, blank=True, null=True)
-    # last_name = models.CharField(max_length=255, blank=True, null=True)
-    # middle_name = models.CharField(max_length=255, blank=True, null=True)
-
-    # -------------------------------------------------------
-    # role = models.SmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True)
-
-    # -------------------------------------------------------
-    # role = models.ManyToManyField(SubRole, related_name = "role_user", blank=True)
-
     #--------------------------------------------------------
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    # is_checked = models.BooleanField(default=False)
-    # is_moder = models.BooleanField(default=False)
+    is_autoservice = models.BooleanField(default=False)
 
+    #--------------------------------------------------------
+    cto_name = models.CharField(max_length=50, null=True, blank=True)
+    cto_logo = models.ImageField(upload_to=user_photos_dir, default="default/default.png")
+    cto_id = models.CharField(max_length=50, null=True, blank=True)
+    cto_lat = models.CharField(max_length=50, null=True, blank=True)
+    cto_lng = models.CharField(max_length=50, null=True, blank=True)
+ 
     #--------------------------------------------------------
     created_at = models.DateTimeField(auto_now_add=True)
     last_online = models.DateTimeField(null=True, blank=True)
      
     #--------------------------------------------------------
     avatar = models.ImageField(upload_to=user_photos_dir, default="default/default.png")
-    # ava = models.TextField(blank=True, null=True)
-    # front_passport = models.ImageField(upload_to=user_photos_dir, blank=True, null=True)
-    # back_passport = models.ImageField(upload_to=user_photos_dir, blank=True, null=True)
-
-    #--------------------------------------------------------
-    # rating_array = ArrayField(models.FloatField(null=True, blank=True, 
-    #                           validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]), null=True ,blank=True, default=list,
-    #                          )
-    # rat = models.FloatField(blank=True, null=True)
-
-    # about = models.TextField(blank=True, null=True)
-    # favorites = models.ManyToManyField("products.Product", related_name="favs", blank=True)
-    # basket = models.ManyToManyField("products.Product", related_name="basket", blank=True)
 
     # -------------------------------------------------------
     USERNAME_FIELD = 'phone'
