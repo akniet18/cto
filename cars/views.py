@@ -14,7 +14,7 @@ class CarApi(APIView):
 
     def get(self, request):
         car = Car.objects.filter(user=request.user)
-        s = CarSer(car, many=True)
+        s = CarSer(car, many=True, context={'request': request})
         return Response(s.data)
 
     def post(self, request):

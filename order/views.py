@@ -97,5 +97,5 @@ class History(APIView):
 
     def get(self, request):
         order = Order.objects.filter(is_finished=True, owner=request.user)
-        s = OrderSer(order, many=True)
+        s = OrderSer(order, many=True, context={'request': request})
         return Response(s.data)
