@@ -40,6 +40,7 @@ class CTOSer(serializers.Serializer):
 
 class OrderRequestSer(serializers.ModelSerializer):
     cto = CTOSer(read_only=True)
+    order = OrderSer(read_only=True)
     class Meta:
         model = OrderRequest
         fields = "__all__"
