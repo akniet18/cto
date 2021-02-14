@@ -4,8 +4,8 @@ from django.db import models
 class Order(models.Model):
     car = models.ForeignKey("cars.Car", on_delete=models.CASCADE)
     about = models.TextField(blank=True, null=True)
-    service = models.ForeignKey("service.Service", on_delete=models.CASCADE)
-    subservice = models.ForeignKey("service.SubService", on_delete=models.CASCADE)
+    service = models.ForeignKey("service.Service", on_delete=models.CASCADE, blank=True, null=True)
+    subservice = models.ForeignKey("service.SubService", on_delete=models.CASCADE, blank=True, null=True)
     owner = models.ForeignKey("users.User", on_delete=models.CASCADE)
 
     is_finished = models.BooleanField(default=False)

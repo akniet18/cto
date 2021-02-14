@@ -99,3 +99,40 @@ class History(APIView):
         order = Order.objects.filter(is_finished=True, owner=request.user)
         s = OrderSer(order, many=True, context={'request': request})
         return Response(s.data)
+
+class OrderList(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get(self, request):
+        queryset = Order.objects.filter(is_finished=False)
+        s = OrderSer(s, many=True, context={'request': request})
+        return Response(s.data)
+    
+    def put(self, request):
+        s = OrderListSer(data=request.data)
+        if s.is_valid():
+            order = Order.objects.get(id=s.validated_data['id'])
+            order.about = s.validated_data['about']
+            order.service = s.validated_data.get('service', order.service)
+            order.subservice = s.validated_data.get('subservice', order.subservice)
+            order.save()
+            ser = OrderSer(order, context={'request': request})
+            return Response(ser.data)
+        else:
+            return Response(s.errors)
+
+    def delete(self, request):
+        s = OrderListSer(data=request.data)
+        if s.is_valid():
+            Order.objects.get(id=s.validated_data['id']).delete()
+            return Response({'status':'ok'})
+        else:
+            return Response(s.errors)
+
+
+class OrderImgDelete(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, id):
+        OrderImg.objects.get(id=id).delete()
+        return Response({'status': 'ok'})

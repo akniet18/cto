@@ -8,19 +8,21 @@ class OrderImg(serializers.ModelSerializer):
     image = serializers.SerializerMethodField('get_avatar_url')
     class Meta:
         model = Image
-        fields = ('image',)
+        fields = ('id', 'image',)
     def get_avatar_url(self, obj):
         return self.context['request'].build_absolute_uri(obj.image.url)
 
         
 class OrderSer(serializers.ModelSerializer):
-    car = CarSer()
-    service = ServiceSer()
-    subservice = ServiceSer()
-    order_img = OrderImg(many=True)
+    car = CarSer(required=False)
+    service = ServiceSer(required=False)
+    subservice = ServiceSer(required=False)
+    order_img = OrderImg(many=True, required=False)
     class Meta:
         model = Order
-        fields = ('id', 'car', 'about', "service", "subservice", 'owner', 'order_img')
+        fields = ('id', 'car', 'about', "service", "subservice", 'owner', 'order_img', "in_work", 'is_finished')
+        read_only_fields = ('id', "in_work", 'is_finished', 'order_img', 'owner')
+    
 
 
 class OrderCreateSer(serializers.Serializer):
@@ -44,3 +46,10 @@ class OrderRequestSer(serializers.ModelSerializer):
     class Meta:
         model = OrderRequest
         fields = "__all__"
+
+
+class OrderListSer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    class Meta:
+        model = Order
+        fields = ('id', 'about', 'service', 'subservice')

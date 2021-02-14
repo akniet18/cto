@@ -150,3 +150,10 @@ class CreateCto(APIView):
         else:
             return Response(s.errors)
         
+
+class UserList(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
