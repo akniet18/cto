@@ -10,6 +10,11 @@ class RegisterSerializer(serializers.Serializer):
     code = serializers.CharField()
 
 
+class LoginAdminSerializer(serializers.Serializer):
+    phone = serializers.CharField(max_length=15)
+    password = serializers.CharField(max_length=15)
+
+
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar_url', read_only=True)
     phone = serializers.CharField(required=False)
@@ -46,7 +51,7 @@ class CreateCtoSer(serializers.Serializer):
 
 
 class Idser(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.CharField()
 
 
 

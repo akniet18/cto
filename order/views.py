@@ -105,7 +105,7 @@ class OrderList(APIView):
     
     def get(self, request):
         queryset = Order.objects.filter(is_finished=False)
-        s = OrderSer(s, many=True, context={'request': request})
+        s = OrderSer(queryset, many=True, context={'request': request})
         return Response(s.data)
     
     def put(self, request):

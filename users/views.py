@@ -13,6 +13,7 @@ from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
 from utils.compress import compress_image, base64img
 from rest_framework import filters
+import uuid
 # smsc = SMSC()
 
 
@@ -84,6 +85,32 @@ class Register(APIView):
             return Response(s.errors)
 
 
+
+class LoginAdmin(APIView):
+    permission_classes = [permissions.AllowAny,]
+
+    def post(self, request):
+        s = LoginAdminSerializer(data=request.data)
+        if s.is_valid():
+            phone = s.validated_data['phone']
+            password = s.validated_data['password']
+            us = User.objects.filter(phone=phone, is_staff=True)
+            if us.exists():
+                us = us[0]
+                if us.check_password(password):
+                    if Token.objects.filter(user=us).exists():
+                        token = Token.objects.get(user=us)
+                    else:
+                        token = Token.objects.create(user=us)
+                    return Response({'key': token.key, 'uid': us.pk})
+                else:
+                    return Response({'status': 'error'})
+            else:
+                return Response({'status': 'error'})
+        else:
+            return Response(s.errors)
+
+
         
 class UserApi(APIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -129,22 +156,32 @@ class CreateCto(APIView):
     def post(self, request):
         s = CreateCtoSer(data=request.data)
         if s.is_valid():
+            cto_id = uuid.uuid4().hex[:10]
             phone = s.validated_data['phone']
             if phone[0] != "+":
                 phone = "+" + phone
+            check = True
+            while check:
+                if User.objects.filter(cto_id=cto_id).exists():
+                    cto_id = uuid.uuid4().hex[:10]
+                else:
+                    check = False
             cto = User.objects.filter(phone = phone)
             if cto.exists():
                 cto = cto[0]
-                if cto.cto_name != None:
+                if cto.cto_name == None:
                     cto.cto_name = s.validated_data['name']
                     cto.cto_logo = s.validated_data['logo']
+                    cto.cto_id = cto_id
                     cto.save()
-                return Response({'status': 'phone already exists'})
+                else:
+                    return Response({'status': 'autoservice already exists'})
             else:
                 User.objects.create(
                     phone = phone,
                     cto_name=s.validated_data['name'],
-                    cto_logo = s.validated_data['logo']
+                    cto_logo = s.validated_data['logo'],
+                    cto_id=cto_id
                 )
             return Response({'status': 'ok'})
         else:
@@ -157,3 +194,27 @@ class UserList(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
 
+class LoginCTO(APIView):
+    permission_classes = [permissions.AllowAny,]
+
+    def post(self, request):
+        s = Idser(data=request.data)
+        if s.is_valid():
+            cto = User.objects.filter(cto_id = s.validated_data['id'])
+            if cto.exists():
+                cto = cto[0]
+                if Token.objects.filter(user=cto).exists():
+                    token = Token.objects.get(user=cto)
+                else:
+                    token = Token.objects.create(user=cto)
+                return Response({
+                    'cto_name': cto.cto_name,
+                    'key': token.key,
+                    # 'uid': us.pk
+                    'cto_logo' : request.scheme+'://'+request.META['HTTP_HOST']+cto.cto_logo.url,
+                    'cto_address': cto.cto_address
+                })
+            else:
+                return Response({'status': "not found"})
+        else:
+            return Response(s.errors)
