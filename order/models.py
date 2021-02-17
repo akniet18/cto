@@ -37,7 +37,7 @@ class Image(models.Model):
 class OrderRequest(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     price = models.BigIntegerField()
-    time = models.FloatField()
+    time = models.CharField(max_length=150,blank=True, null=True)
     cto = models.ForeignKey("users.User", on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
