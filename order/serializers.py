@@ -22,7 +22,6 @@ class OrderSer(serializers.ModelSerializer):
         model = Order
         fields = ('id', 'car', 'about', "service", "subservice", 'owner', 'order_img', "in_work", 'is_finished')
         read_only_fields = ('id', "in_work", 'is_finished', 'order_img', 'owner')
-    
 
 
 class OrderCreateSer(serializers.Serializer):
