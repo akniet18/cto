@@ -38,7 +38,7 @@
         "model": "service.Service",
         "pk": 6,
         "fields": {
-            "name": "Установка газа на авто"
+            "name": "Мойка"
         }
     },
     {
@@ -161,6 +161,15 @@
     },
     {
         "model": "service.SubService",
+        "pk": 58,
+        "fields": {
+            "name": "Установка газа на авто",
+            "service": "1"
+        }
+    },
+    
+    {
+        "model": "service.SubService",
         "pk": 14,
         "fields": {
             "name": "Ремонт деталей по кузову",
@@ -195,7 +204,7 @@
         "model": "service.SubService",
         "pk": 18,
         "fields": {
-            "name": "Замена масло в двигателе",
+            "name": "Замена масла в двигателе",
             "service": "3"
         }
     },
@@ -203,7 +212,7 @@
         "model": "service.SubService",
         "pk": 19,
         "fields": {
-            "name": "Замена масло в коробке АКПП/МКПП",
+            "name": "Замена масла в коробке АКПП/МКПП",
             "service": "3"
         }
     },
