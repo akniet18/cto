@@ -183,7 +183,13 @@ class CreateCto(APIView):
                     cto_logo = s.validated_data['logo'],
                     cto_id=cto_id
                 )
-            return Response({'status': 'ok'})
+            return Response({
+                'status': 'ok', 
+                'name': s.validated_data['name'],
+                'logo': s.validated_data['logo'],
+                'id': cto_id.upper(),
+                'phone': phone
+            })
         else:
             return Response(s.errors)
         
@@ -200,7 +206,8 @@ class LoginCTO(APIView):
     def post(self, request):
         s = Idser(data=request.data)
         if s.is_valid():
-            cto = User.objects.filter(cto_id = s.validated_data['id'])
+            cto_id = s.validated_data['id'].lower()
+            cto = User.objects.filter(cto_id = cto_id)
             if cto.exists():
                 cto = cto[0]
                 if Token.objects.filter(user=cto).exists():
