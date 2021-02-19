@@ -47,6 +47,13 @@ class OrderRequestSer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class CreateOrderRequestSer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderRequest
+        fields = ("order", "price", "time")
+    
+
+
 class OrderListSer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     class Meta:

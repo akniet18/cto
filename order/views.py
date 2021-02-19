@@ -50,7 +50,7 @@ class CreateOrderRequestApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
-        s = OrderRequestSer(data=request.data)
+        s = CreateOrderRequestSer(data=request.data)
         if s.is_valid():
             OrderRequest.objects.create(
                 cto = request.user,
