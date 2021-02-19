@@ -22,7 +22,7 @@ class OrderApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        orders=Order.objects.filter(is_finished=False, in_work=False)
+        orders=Order.objects.filter(is_finished=False, in_work=False).exclude(owner=request.user)
         s = OrderSer(orders, many=True, context={'request': request})
         return Response(s.data)
 
@@ -89,8 +89,11 @@ class RequestAccept(APIView):
         queryset.order.in_work = True
         queryset.order.price = queryset.price
         queryset.order.cto = queryset.cto
+        queryset.order.time = queryset.time
         queryset.order.save()
+        OrderRequest.objects.filter(order=queryset.order).delete()
         return Response({'status': 'ok'})
+
 
 class History(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -99,6 +102,7 @@ class History(APIView):
         order = Order.objects.filter(is_finished=True, owner=request.user)
         s = OrderSer(order, many=True, context={'request': request})
         return Response(s.data)
+
 
 class OrderList(APIView):
     permission_classes = (permissions.IsAuthenticated,)
