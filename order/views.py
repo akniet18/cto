@@ -104,6 +104,15 @@ class History(APIView):
         return Response(s.data)
 
 
+class ActiveOrder(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        order = Order.objects.filter(in_work=True, owner=request.user)
+        s = OrderSer(order, many=True, context={'request': request})
+        return Response(s.data)
+
+
 class OrderList(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     
