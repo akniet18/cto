@@ -225,3 +225,31 @@ class LoginCTO(APIView):
                 return Response({'status': "not found"})
         else:
             return Response(s.errors)
+
+
+class CTOList(APIView):
+    permission_classes = [permissions.AllowAny,]
+
+    def get(self, request):
+        queryset = User.objects.filter(cto_name__isnull=False)
+        s = CTOListSer(queryset, many=True, context={'request': request})
+        return Response(s.data)
+
+    def put(self, request):
+        s = CTOListSer(data=request.data)
+        if s.is_valid():
+            cto = User.objects.get(cto_id=s.validated_data['cto_id'])
+            cto.cto_name = s.validated_data.get('cto_name', cto.cto_name)
+            cto.cto_logo = s.validated_data.get('cto_logo', cto.cto_logo)
+            cto.save()
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors)
+
+    def delete(self, request):
+        s = CTOListSer(data=request.data)
+        if s.is_valid():
+            User.objects.get(cto_id=s.validated_data['cto_id']).delete()
+            return Response({'status': 'ok'})
+        else:
+            return Response(s.errors)

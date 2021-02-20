@@ -15,5 +15,6 @@ urlpatterns = [
     path('change/avatar/', ChangeAvatar.as_view()),
 
     path('create/autoservice/', CreateCto.as_view()),
+    path('autoservices/', CTOList.as_view()),
 ]
 urlpatterns += router.urls

@@ -54,6 +54,12 @@ class Idser(serializers.Serializer):
     id = serializers.CharField()
 
 
+class CTOListSer(serializers.ModelSerializer):
+    cto_logo = serializers.SerializerMethodField('get_avatar_url')
+    class Meta:
+        model = User
+        fields = ("id", "cto_id", "cto_name", "cto_logo", "cto_address")
 
-
+    def get_avatar_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.cto_logo.url)
     

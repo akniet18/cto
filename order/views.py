@@ -98,19 +98,29 @@ class RequestAccept(APIView):
 class History(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request):
-        order = Order.objects.filter(is_finished=True, owner=request.user)
-        s = OrderSer(order, many=True, context={'request': request})
-        return Response(s.data)
+    def get(self, request, role):
+        if role == "0":
+            order = Order.objects.filter(is_finished=True, owner=request.user)
+            s = OrderSer(order, many=True, context={'request': request})
+            return Response(s.data)
+        else:
+            order = Order.objects.filter(is_finished=True, cto=request.user)
+            s = OrderSer(order, many=True, context={'request': request})
+            return Response(s.data)
 
 
 class ActiveOrder(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request):
-        order = Order.objects.filter(in_work=True, owner=request.user)
-        s = OrderSer(order, many=True, context={'request': request})
-        return Response(s.data)
+    def get(self, request, role):
+        if role == "0":
+            order = Order.objects.filter(in_work=True, owner=request.user)
+            s = OrderSer(order, many=True, context={'request': request})
+            return Response(s.data)
+        else:
+            order = Order.objects.filter(in_work=True, cto=request.user)
+            s = OrderSer(order, many=True, context={'request': request})
+            return Response(s.data)
 
 
 class OrderList(APIView):
