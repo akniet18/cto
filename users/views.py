@@ -227,29 +227,19 @@ class LoginCTO(APIView):
             return Response(s.errors)
 
 
-class CTOList(APIView):
-    permission_classes = [permissions.AllowAny,]
+class CTOList(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = CTOListSer
+    queryset = User.objects.filter(cto_name__isnull=False)
 
-    def get(self, request):
-        queryset = User.objects.filter(cto_name__isnull=False)
-        s = CTOListSer(queryset, many=True, context={'request': request})
-        return Response(s.data)
+class CTODelete(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
-    def put(self, request):
-        s = CTOListSer(data=request.data)
-        if s.is_valid():
-            cto = User.objects.get(cto_id=s.validated_data['cto_id'])
-            cto.cto_name = s.validated_data.get('cto_name', cto.cto_name)
-            cto.cto_logo = s.validated_data.get('cto_logo', cto.cto_logo)
-            cto.save()
-            return Response({'status': 'ok'})
-        else:
-            return Response(s.errors)
-
-    def delete(self, request):
-        s = CTOListSer(data=request.data)
-        if s.is_valid():
-            User.objects.get(cto_id=s.validated_data['cto_id']).delete()
-            return Response({'status': 'ok'})
-        else:
-            return Response(s.errors)
+    def delete(self, request, id):
+        cto = User.objects.get(id=id)
+        cto.cto_name = None
+        cto.cto_logo = None
+        cto.cto_id = None
+        cto.cto_address = None
+        cto.save()
+        return Response({'status': 'ok'})

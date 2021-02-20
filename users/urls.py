@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'list', UserList, basename='users')
+router.register(r'autoservices', CTOList, basename='users')
 
 urlpatterns = [
     path("phone/", PhoneCode.as_view()),
@@ -15,6 +16,6 @@ urlpatterns = [
     path('change/avatar/', ChangeAvatar.as_view()),
 
     path('create/autoservice/', CreateCto.as_view()),
-    path('autoservices/', CTOList.as_view()),
+    path('autoservices/delete/<id>/', CTODelete.as_view())
 ]
 urlpatterns += router.urls

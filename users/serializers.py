@@ -62,4 +62,11 @@ class CTOListSer(serializers.ModelSerializer):
 
     def get_avatar_url(self, obj):
         return self.context['request'].build_absolute_uri(obj.cto_logo.url)
+
+    def update(self, instance, validated_data):
+        instance.cto_name = validated_data.get('cto_name', instance.cto_name)
+        instance.cto_logo = validated_data.get('cto_logo', instance.cto_logo)
+        instance.cto_address = validated_data.get('cto_address', instance.cto_address)
+        instance.save()
+        return instance
     
