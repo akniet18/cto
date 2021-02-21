@@ -20,8 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(required=False)
     class Meta:
         model = User
-        fields = ('id', 'phone', 'avatar', 'email', 'nickname', 'second_phone', 'third_phone')
-        read_only_fields = ('id', )
+        fields = ('id', 'phone', 'avatar', 'email', 'nickname', 'second_phone', 'third_phone', "cto_name", "cto_logo", "cto_address")
+        read_only_fields = ('id', "cto_name", "cto_logo", "cto_address")
 
     def get_avatar_url(self, obj):
         return self.context['request'].build_absolute_uri(obj.avatar.url)
@@ -70,3 +70,8 @@ class CTOListSer(serializers.ModelSerializer):
         instance.save()
         return instance
     
+
+class CTORequestSer(serializers.ModelSerializer):
+    class Meta:
+        model = CTORequest
+        fields = "__all__"

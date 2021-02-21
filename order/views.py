@@ -29,11 +29,16 @@ class OrderApi(APIView):
     def post(self, request):
         s = OrderCreateSer(data=request.data)
         if s.is_valid():
+            sub_id = s.validated_data.get('subservice_id', None)
+            if sub_id:
+                sub = SubService.objects.get(id=sub_id)
+            else:
+                sub = None
             order = Order.objects.create(
                 car = Car.objects.get(id=s.validated_data['car_id']),
-                about = s.validated_data['about'],
+                about = s.validated_data.get('about', None),
                 service = Service.objects.get(id=s.validated_data['service_id']),
-                subservice = SubService.objects.get(id=s.validated_data['subservice_id']),
+                subservice = sub,
                 owner = request.user
             )
             imgs = request.FILES.getlist('images')

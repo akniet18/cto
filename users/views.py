@@ -232,6 +232,8 @@ class CTOList(viewsets.ModelViewSet):
     serializer_class = CTOListSer
     queryset = User.objects.filter(cto_name__isnull=False)
 
+    
+
 class CTODelete(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -242,4 +244,22 @@ class CTODelete(APIView):
         cto.cto_id = None
         cto.cto_address = None
         cto.save()
+        return Response({'status': 'ok'})
+
+
+class SendRequestToAdmin(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        q = CTORequest.objects.all()
+        s = CTORequestSer(q, many=True)
+        return Response(s.data)
+
+
+    def post(self, request):
+        q = CTORequest.objects.filter(phone = request.user.phone)
+        if q.exists():
+            q = q[0]
+        else:
+            CTORequest.objects.create(phone = request.user.phone, nickname = request.user.nickname)
         return Response({'status': 'ok'})

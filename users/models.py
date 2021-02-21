@@ -109,3 +109,11 @@ class PhoneOTP(models.Model):
     def __str__(self):
         return str(self.phone) + ' is sent ' + str(self.otp)
 
+
+
+class CTORequest(models.Model):
+    phone = models.CharField(max_length = 12, unique = True)
+    nickname = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return self.phone

@@ -27,9 +27,9 @@ class OrderSer(serializers.ModelSerializer):
 class OrderCreateSer(serializers.Serializer):
     car_id = serializers.IntegerField()
     service_id = serializers.IntegerField()
-    subservice_id = serializers.IntegerField()
+    subservice_id = serializers.IntegerField(required=False)
     # owner_id = serializers.IntegerField()
-    about = serializers.CharField()
+    about = serializers.CharField(required=False)
 
 class CTOSer(serializers.Serializer):
     phone = serializers.CharField()
