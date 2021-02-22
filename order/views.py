@@ -164,3 +164,13 @@ class OrderImgDelete(APIView):
     def post(self, request, id):
         OrderImg.objects.get(id=id).delete()
         return Response({'status': 'ok'})
+
+
+class FinishOrder(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, id):
+        o = Order.objects.get(id=id)
+        o.is_finished = True
+        o.save()
+        return Response({'status': 'ok'})
