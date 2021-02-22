@@ -13,5 +13,5 @@ urlpatterns = [
     path('list/', OrderList.as_view()),
     path('img/delete/', OrderImgDelete.as_view()),
 
-    path('finish/', FinishOrder.as_view())
+    path('finish/<id>', FinishOrder.as_view())
 ]
