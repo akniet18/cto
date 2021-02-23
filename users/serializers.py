@@ -48,6 +48,9 @@ class CreateCtoSer(serializers.Serializer):
     logo = serializers.FileField(required=False)
     name = serializers.CharField(required=False)
     phone = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    lat = serializers.CharField(required=False)
+    lng = serializers.CharField(required=False)
 
 
 class Idser(serializers.Serializer):

@@ -173,6 +173,9 @@ class CreateCto(APIView):
                     cto.cto_name = s.validated_data['name']
                     cto.cto_logo = s.validated_data['logo']
                     cto.cto_id = cto_id
+                    cto.cto_address = s.validated_data['address']
+                    cto.cto_lat = s.validated_data['lat']
+                    cto.cto_lng = s.validated_data['lng']
                     cto.save()
                 else:
                     return Response({'status': 'autoservice already exists'})
@@ -181,7 +184,10 @@ class CreateCto(APIView):
                     phone = phone,
                     cto_name=s.validated_data['name'],
                     cto_logo = s.validated_data['logo'],
-                    cto_id=cto_id
+                    cto_id=cto_id,
+                    cto_address = s.validated_data['address'],
+                    cto_lat = s.validated_data['lat'],
+                    cto_lng = s.validated_data['lng']
                 )
             return Response({
                 'status': 'ok', 
