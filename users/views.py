@@ -171,7 +171,9 @@ class CreateCto(APIView):
                 cto = cto[0]
                 if cto.cto_name == None:
                     cto.cto_name = s.validated_data['name']
-                    cto.cto_logo = s.validated_data['logo']
+                    l = s.validated_data.get('logo', None)
+                    if l:
+                        cto.cto_logo = l
                     cto.cto_id = cto_id
                     cto.cto_address = s.validated_data['address']
                     cto.cto_lat = s.validated_data['lat']
@@ -180,22 +182,25 @@ class CreateCto(APIView):
                 else:
                     return Response({'status': 'autoservice already exists'})
             else:
-                User.objects.create(
+                cto = User.objects.create(
                     phone = phone,
                     cto_name=s.validated_data['name'],
-                    cto_logo = s.validated_data['logo'],
                     cto_id=cto_id,
                     cto_address = s.validated_data['address'],
                     cto_lat = s.validated_data['lat'],
                     cto_lng = s.validated_data['lng']
                 )
-            return Response({
-                'status': 'ok', 
-                'name': s.validated_data['name'],
-                'logo': s.validated_data['logo'],
-                'id': cto_id.upper(),
-                'phone': phone
-            })
+                l = s.validated_data.get('logo', None)
+                if l:
+                    cto.cto_logo = l
+                    cto.save()
+                return Response({
+                    'status': 'ok', 
+                    'name': s.validated_data['name'],
+                    'logo': request.scheme+'://'+request.META['HTTP_HOST']+cto.cto_logo.url,
+                    'id': cto_id.upper(),
+                    'phone': phone
+                })
         else:
             return Response(s.errors)
         
