@@ -194,13 +194,8 @@ class CreateCto(APIView):
                 if l:
                     cto.cto_logo = l
                     cto.save()
-                return Response({
-                    'status': 'ok', 
-                    'name': s.validated_data['name'],
-                    'logo': request.scheme+'://'+request.META['HTTP_HOST']+cto.cto_logo.url,
-                    'id': cto_id.upper(),
-                    'phone': phone
-                })
+                s = CTOListSer(cto)
+                return Response(s.data)
         else:
             return Response(s.errors)
         
