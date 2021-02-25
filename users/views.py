@@ -194,8 +194,10 @@ class CreateCto(APIView):
                 if l:
                     cto.cto_logo = l
                     cto.save()
-                s = CTOListSer(cto, context={'request': request})
-                return Response(s.data)
+                
+            s = CTOListSer(cto, context={'request': request})
+            print(cto)    
+            return Response(s.data)
         else:
             return Response(s.errors)
         
