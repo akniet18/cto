@@ -224,7 +224,7 @@ class LoginCTO(APIView):
                     'cto_name': cto.cto_name,
                     'key': token.key,
                     # 'uid': us.pk
-                    'cto_logo' : request.scheme+'://'+request.META['HTTP_HOST']+cto.cto_logo.url,
+                    'cto_logo': request.scheme+'://'+request.META['HTTP_HOST']+cto.cto_logo.url,
                     'cto_address': cto.cto_address
                 })
             else:
