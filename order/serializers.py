@@ -59,3 +59,8 @@ class OrderListSer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'about', 'service', 'subservice')
+
+
+class LatLngSer(serializers.Serializer):
+    lat = serializers.CharField()
+    lng = serializers.CharField()
