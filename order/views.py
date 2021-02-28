@@ -17,7 +17,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from utils.compress import compress_image, base64img
 from rest_framework import filters
 import requests
-
+from utils.push import send_push
 
 class OrderApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -81,7 +81,6 @@ class OrderRequestApi(APIView):
             lng = s.validated_data['lng']
             orig = ""
             for i in orq:
-                print(i.cto.cto_lat)
                 orig += i.cto.cto_lat+","+i.cto.cto_lng+"|"
             url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={lat},{lng}&destinations={orig}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
             r = requests.get(url)
@@ -90,7 +89,6 @@ class OrderRequestApi(APIView):
                 # serializer.data[i]['distance']  = r.json()['rows'][0]['elements'][i]['distance']['value']
                 serializer.data[i]['duration_text']  = r.json()['rows'][0]['elements'][i]['duration']['text']
                 # serializer.data[i]['duration']  = r.json()['rows'][0]['elements'][i]['duration']['value']
-             
             return Response(serializer.data)
         else:
             return Response(s.errors)
@@ -193,4 +191,12 @@ class FinishOrder(APIView):
         o = Order.objects.get(id=id)
         o.is_finished = True
         o.save()
+        return Response({'status': 'ok'})
+
+
+class Push(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        send_push(User.objects.get(id=1), "hello alem")
         return Response({'status': 'ok'})

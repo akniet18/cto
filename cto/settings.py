@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+    'push_notifications'
 ]
 
 APPEND_SLASH=False
@@ -109,6 +110,15 @@ DATABASES = {
         'CONN_MAX_AGE': 0,
     }
 }
+
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "FCM_API_KEY": "AAAArm2ERYs:APA91bFgQBDsbqYygdOcJZET953qo3aQHIBD4V8NCUuT7Ojcq361DRMdoXzWtiHuIOFe1bJAAHKBL_J3AXR4jQqgLba9QElVfr-peulQ7Da_r92p7Ib0szAo09VTSPkCjP_TUe_Eeo7h",
+    "APNS_CERTIFICATE": "aps.pem",
+    "APNS_TOPIC": "com.kz.ALU",
+    'APNS_USE_SANDBOX': False
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
