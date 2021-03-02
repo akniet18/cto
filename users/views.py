@@ -270,3 +270,42 @@ class SendRequestToAdmin(APIView):
         else:
             CTORequest.objects.create(phone = request.user.phone, nickname = request.user.nickname)
         return Response({'status': 'ok'})
+
+
+class pushRegister(APIView):
+    permission_classes = [permissions.IsAuthenticated,]
+    
+    def post(self, request):
+        s = pushSerializer(data=request.data)
+        if s.is_valid():
+            cmt = s.validated_data['cmt']
+            if cmt == "apn":
+                ios = APNSDevice.objects.filter(user = request.user)
+                if ios.exists():
+                    ios = APNSDevice.objects.get(user = request.user)
+                    ios.registration_id = s.validated_data['reg_id']
+                    ios.save()
+                else:
+                    APNSDevice.objects.create(user=request.user, registration_id=s.validated_data['reg_id'])
+            else:
+                android = GCMDevice.objects.filter(user=request.user)
+                if android.exists():
+                    android = GCMDevice.objects.get(user=request.user)
+                    android.registration_id = s.validated_data['reg_id']
+                    android.save()
+                else:
+                    GCMDevice.objects.create(user=request.user, active=True,
+                                        registration_id=s.validated_data['reg_id'],
+                                        cloud_message_type="FCM")
+            return Response({'status': "ok"})
+        else:
+            return Response(s.errors)
+
+
+class getMessages(APIView):
+    permission_classes = [permissions.IsAuthenticated,]
+
+    def get(self, request):
+        m = Message.objects.get(user = request.user)
+        s = MessageSer(m, many=True)
+        return Response(s.data)

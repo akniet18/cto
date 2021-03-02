@@ -17,6 +17,9 @@ urlpatterns = [
 
     path('create/autoservice/', CreateCto.as_view()),
     path('autoservices/delete/<id>/', CTODelete.as_view()),
-    path('autoservice/request/', SendRequestToAdmin.as_view())
+    path('autoservice/request/', SendRequestToAdmin.as_view()),
+
+    path('push/register/', pushRegister.as_view()),
+    path('my/message/', getMessages.as_view())
 ]
 urlpatterns += router.urls

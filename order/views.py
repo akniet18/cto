@@ -198,5 +198,5 @@ class Push(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
-        send_push(User.objects.get(id=1), "hello alem")
+        send_push(User.objects.get(id=3), "hello alem")
         return Response({'status': 'ok'})

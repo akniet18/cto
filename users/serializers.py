@@ -78,3 +78,12 @@ class CTORequestSer(serializers.ModelSerializer):
     class Meta:
         model = CTORequest
         fields = "__all__"
+
+
+class pushSerializer(serializers.Serializer):
+	reg_id = serializers.CharField()
+	cmt = serializers.CharField()
+
+
+class MessageSer(serializers.Serializer):
+    text = models.CharField()
