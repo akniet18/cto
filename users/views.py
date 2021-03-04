@@ -206,7 +206,7 @@ class CreateCto(APIView):
 class UserList(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = User.objects.filter(is_superuser=False, is_staff=False)
 
 
 class LoginCTO(APIView):

@@ -15,6 +15,16 @@ class LoginAdminSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=15)
 
 
+class UserSerializerShort(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField('get_avatar_url', read_only=True)
+    phone = serializers.CharField(required=False)
+    class Meta:
+        model = User
+        fields = ('id', 'phone', 'avatar', 'email', 'nickname', 'second_phone', 'third_phone')
+    def get_avatar_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.avatar.url)
+
+
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar_url', read_only=True)
     phone = serializers.CharField(required=False)

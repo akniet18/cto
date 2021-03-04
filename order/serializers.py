@@ -2,6 +2,7 @@ from .models import *
 from rest_framework import serializers
 from cars.serializers import CarSer
 from service.serializers import ServiceSer
+from users.serializers import UserSerializerShort
 
 
 class OrderImg(serializers.ModelSerializer):
@@ -18,6 +19,7 @@ class OrderSer(serializers.ModelSerializer):
     service = ServiceSer(required=False)
     subservice = ServiceSer(required=False)
     order_img = OrderImg(many=True, required=False)
+    owner = UserSerializerShort(required=False)
     class Meta:
         model = Order
         fields = ('id', 'car', 'about', "service", "subservice", 'owner', 'order_img', "in_work", 'is_finished')
