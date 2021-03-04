@@ -85,5 +85,7 @@ class pushSerializer(serializers.Serializer):
 	cmt = serializers.CharField()
 
 
-class MessageSer(serializers.Serializer):
-    text = models.CharField()
+class MessageSer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = "__all__"
