@@ -14,6 +14,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from utils.compress import compress_image, base64img
 from rest_framework import filters
 import uuid
+from push_notifications.models import APNSDevice, GCMDevice
+
 # smsc = SMSC()
 
 
@@ -306,6 +308,6 @@ class getMessages(APIView):
     permission_classes = [permissions.IsAuthenticated,]
 
     def get(self, request):
-        m = Message.objects.get(user = request.user)
+        m = Message.objects.filter(user = request.user)
         s = MessageSer(m, many=True)
         return Response(s.data)

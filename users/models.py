@@ -123,7 +123,7 @@ class CTORequest(models.Model):
 class Message(models.Model):
     text = models.TextField()
     user = models.ForeignKey('User', on_delete=models.CASCADE)
-
+    is_readed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.users.phone
+        return self.user.phone

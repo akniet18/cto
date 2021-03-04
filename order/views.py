@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
 from cars.models import Car
-from users.models import User
+from users.models import User, Message
 from service.models import Service, SubService
 from rest_framework import generics, permissions, status, views, viewsets
 from rest_framework.views import APIView
@@ -47,6 +47,11 @@ class OrderApi(APIView):
                 Image.objects.create(
                     image=i, order=order
                 )
+            text = "Ваше объявление опубликовано! Ждите заявок."
+            send_push(request.user, text)
+            Message.objects.create(
+                user = request.user, text = text
+            )
             return Response({'status': 'ok'})
         else:
             return Response(s.errors)
@@ -63,6 +68,11 @@ class CreateOrderRequestApi(APIView):
                 order = s.validated_data['order'],
                 price = s.validated_data['price'],
                 time = s.validated_data['time']
+            )
+            text = "На ваше объявление откликнулись"
+            send_push(s.validated_data['order'].owner, text)
+            Message.objects.create(
+                user = s.validated_data['order'].owner, text = text
             )
             return Response({'status': 'ok'})
         else:
@@ -101,6 +111,12 @@ class RequestDecline(APIView):
     def post(self, request, id):
         queryset = OrderRequest.objects.get(id=id)
         queryset.delete()
+
+        text = f"Пользователь {queryset.order.owner.nickname} отклонил вашу заявку."
+        send_push(queryset.order.owner, text)
+        Message.objects.create(
+            user = queryset.order.owner, text = text
+        )
         return Response({'status': 'ok'})
 
 
@@ -115,6 +131,12 @@ class RequestAccept(APIView):
         queryset.order.time = queryset.time
         queryset.order.save()
         OrderRequest.objects.filter(order=queryset.order).delete()
+
+        text = f"Пользователь {queryset.order.owner.nickname} принял вашу заявку. Смотрите в активных заказах."
+        send_push(queryset.order.owner, text)
+        Message.objects.create(
+            user = queryset.order.owner, text = text
+        )
         return Response({'status': 'ok'})
 
 
@@ -191,6 +213,12 @@ class FinishOrder(APIView):
         o = Order.objects.get(id=id)
         o.is_finished = True
         o.save()
+
+        text = f"Исполнитель {o.cto.cto_name} завершил ваш заказ. Смотрите в истории заказов."
+        send_push(o.owner, text)
+        Message.objects.create(
+            user = o.owner, text = text
+        )
         return Response({'status': 'ok'})
 
 
