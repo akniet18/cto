@@ -13,16 +13,26 @@ class OrderImg(serializers.ModelSerializer):
     def get_avatar_url(self, obj):
         return self.context['request'].build_absolute_uri(obj.image.url)
 
-        
+
+class CTOSer(serializers.Serializer):
+    phone = serializers.CharField()
+    cto_name = serializers.CharField()
+    cto_logo = serializers.SerializerMethodField('get_avatar_url', read_only=True)
+
+    def get_avatar_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.cto_logo.url)
+
+
 class OrderSer(serializers.ModelSerializer):
     car = CarSer(required=False)
     service = ServiceSer(required=False)
     subservice = ServiceSer(required=False)
     order_img = OrderImg(many=True, required=False)
     owner = UserSerializerShort(required=False)
+    cto = CTOSer()
     class Meta:
         model = Order
-        fields = ('id', 'car', 'about', "service", "subservice", 'owner', 'order_img', "in_work", 'is_finished')
+        fields = ('id', 'car', 'about', "service", "subservice", 'owner', 'order_img', "in_work", 'is_finished', 'cto')
         read_only_fields = ('id', "in_work", 'is_finished', 'order_img', 'owner')
 
 
