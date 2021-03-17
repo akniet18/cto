@@ -160,7 +160,7 @@ class ActiveOrder(APIView):
             s = OrderSer(order, many=True, context={'request': request})
             return Response(s.data)
         else:
-            order = Order.objects.filter(in_work=True, cto=request.user, , is_finished=False)
+            order = Order.objects.filter(in_work=True, cto=request.user, is_finished=False)
             s = OrderSer(order, many=True, context={'request': request})
             return Response(s.data)
 
