@@ -83,25 +83,22 @@ class OrderRequestApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, lat, lng):
-        s = LatLngSer(data=request.data)
-        if s.is_valid():
-            orq = OrderRequest.objects.filter(order__owner=request.user)
-            serializer = OrderRequestSer(orq, many=True, context={'request': request})
-            # lat = s.validated_data['lat']
-            # lng = s.validated_data['lng']
-            orig = ""
-            for i in orq:
-                orig += i.cto.cto_lat+","+i.cto.cto_lng+"|"
-            url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={lat},{lng}&destinations={orig}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
-            r = requests.get(url)
-            for i in range(len(serializer.data)):
-                serializer.data[i]['distance_text']  = r.json()['rows'][0]['elements'][i]['distance']['text']
-                # serializer.data[i]['distance']  = r.json()['rows'][0]['elements'][i]['distance']['value']
-                serializer.data[i]['duration_text']  = r.json()['rows'][0]['elements'][i]['duration']['text']
-                # serializer.data[i]['duration']  = r.json()['rows'][0]['elements'][i]['duration']['value']
-            return Response(serializer.data)
-        else:
-            return Response(s.errors)
+        orq = OrderRequest.objects.filter(order__owner=request.user)
+        serializer = OrderRequestSer(orq, many=True, context={'request': request})
+        # lat = s.validated_data['lat']
+        # lng = s.validated_data['lng']
+        orig = ""
+        for i in orq:
+            orig += i.cto.cto_lat+","+i.cto.cto_lng+"|"
+        url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={lat},{lng}&destinations={orig}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
+        r = requests.get(url)
+        for i in range(len(serializer.data)):
+            serializer.data[i]['distance_text']  = r.json()['rows'][0]['elements'][i]['distance']['text']
+            # serializer.data[i]['distance']  = r.json()['rows'][0]['elements'][i]['distance']['value']
+            serializer.data[i]['duration_text']  = r.json()['rows'][0]['elements'][i]['duration']['text']
+            # serializer.data[i]['duration']  = r.json()['rows'][0]['elements'][i]['duration']['value']
+        return Response(serializer.data)
+        
 
 
 
