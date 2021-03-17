@@ -8,8 +8,8 @@ urlpatterns = [
     path('history/<role>', History.as_view()),
     path('active/<role>', ActiveOrder.as_view()),
 
-    path('request/decline/<id>', RequestDecline.as_view()),
-    path('request/accept/<id>', RequestAccept.as_view()),
+    path('decline/<id>', RequestDecline.as_view()),
+    path('accept/<id>', RequestAccept.as_view()),
     path('list/', OrderList.as_view()),
     path('img/delete/', OrderImgDelete.as_view()),
 
