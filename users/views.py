@@ -158,6 +158,7 @@ class CreateCto(APIView):
     def post(self, request):
         s = CreateCtoSer(data=request.data)
         if s.is_valid():
+            CTORequest.objects.get(id=s.validated_data['id']).delete()
             cto_id = uuid.uuid4().hex[:10]
             phone = s.validated_data['phone']
             if phone[0] != "+":

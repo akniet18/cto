@@ -55,6 +55,7 @@ class ChangeAvaSer(serializers.Serializer):
     third_phone = serializers.CharField(required=False)
 
 class CreateCtoSer(serializers.Serializer):
+    id = serializers.IntegerField(required=False)
     logo = serializers.FileField(required=False)
     name = serializers.CharField(required=False)
     phone = serializers.CharField(required=False)
