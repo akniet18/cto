@@ -312,3 +312,12 @@ class getMessages(APIView):
         m = Message.objects.filter(user = request.user)
         s = MessageSer(m, many=True)
         return Response(s.data)
+
+
+def privatepolicy(request):
+    context = {'context': ""}
+    return render(request, 'index.html', context)
+
+def Terms_of_use(request):
+    context = {'context': ""}
+    return render(request, 'index.html', context)

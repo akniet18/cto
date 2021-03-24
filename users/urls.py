@@ -20,6 +20,8 @@ urlpatterns = [
     path('autoservice/request/', SendRequestToAdmin.as_view()),
 
     path('push/register/', pushRegister.as_view()),
-    path('my/message/', getMessages.as_view())
+    path('my/message/', getMessages.as_view()),
+    path('private/policy/', privatepolicy),
+    path('term/of/use/', Terms_of_use),
 ]
 urlpatterns += router.urls
