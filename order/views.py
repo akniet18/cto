@@ -94,9 +94,9 @@ class OrderRequestApi(APIView):
         # print(orig)
         origins = f'{lat},{lng}'
         url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={origins}&destinations={dest}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
-        print(dest)
+        # print(dest)
         r = requests.post(url)
-        # print(r.json())
+        print(r.json())
         for i in range(len(serializer.data)):
             serializer.data[i]['distance_text']  = r.json()['rows'][0]['elements'][i]['distance']['text']
             # serializer.data[i]['distance']  = r.json()['rows'][0]['elements'][i]['distance']['value']
