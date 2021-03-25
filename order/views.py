@@ -246,6 +246,6 @@ class FinishOrder(APIView):
 class Push(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request):
-        send_push(User.objects.get(id=3), "hello alem")
+    def get(self, request, id):
+        send_push(User.objects.get(id=id), "hello alem")
         return Response({'status': 'ok'})

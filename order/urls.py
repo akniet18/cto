@@ -15,5 +15,5 @@ urlpatterns = [
 
     path('finish/<id>', FinishOrder.as_view()),
 
-    path('push', Push.as_view())
+    path('push/<id>', Push.as_view())
 ]
