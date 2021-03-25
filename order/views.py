@@ -79,7 +79,7 @@ class CreateOrderRequestApi(APIView):
             return Response(s.errors)
 
 
-from math import radians, cos, sin, asin, sqrt, round
+from math import radians, cos, sin, asin, sqrt
 def haversine(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points 
