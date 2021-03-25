@@ -79,7 +79,7 @@ class CreateOrderRequestApi(APIView):
             return Response(s.errors)
 
 
-from math import radians, cos, sin, asin, sqrt
+from math import radians, cos, sin, asin, sqrt, round
 def haversine(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points 
@@ -94,7 +94,7 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a)) 
     # Radius of earth in kilometers is 6371
     km = 6371* c
-    return km
+    return round(km, 2)
 
 class OrderRequestApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
