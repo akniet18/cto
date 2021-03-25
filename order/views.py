@@ -91,6 +91,7 @@ class OrderRequestApi(APIView):
         orig = ""
         for i in orq:
             orig += i.cto.cto_lat+","+i.cto.cto_lng+"|"
+        print(orig)
         url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={lat},{lng}&destinations={orig}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
         r = requests.get(url)
         print(r.json())
