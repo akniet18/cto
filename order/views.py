@@ -79,6 +79,23 @@ class CreateOrderRequestApi(APIView):
             return Response(s.errors)
 
 
+from math import radians, cos, sin, asin, sqrt
+def haversine(lon1, lat1, lon2, lat2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    # Radius of earth in kilometers is 6371
+    km = 6371* c
+    return km
+
 class OrderRequestApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -89,17 +106,21 @@ class OrderRequestApi(APIView):
         # lng = s.validated_data['lng']
         print(lat, lng)
         dest = ""
+        distance = []
         for i in orq:
             dest += i.cto.cto_lat+","+i.cto.cto_lng+"|"
+            a = haversine(lng, lat, i.cto.cto_lng, i.cto.cto_lat)
+            distance.append(a)
         # print(orig)
         origins = f'{lat},{lng}'
         url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={origins}&destinations={dest}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
         # print(dest)
         r = requests.post(url)
-        print(r.json())
+        # print(r.json())
         for i in range(len(serializer.data)):
             serializer.data[i]['distance_text']  = r.json()['rows'][0]['elements'][i]['distance']['text']
             # serializer.data[i]['distance']  = r.json()['rows'][0]['elements'][i]['distance']['value']
+            serializer.data[i]['distance']  = distance[i]
             serializer.data[i]['duration_text']  = r.json()['rows'][0]['elements'][i]['duration']['text']
             # serializer.data[i]['duration']  = r.json()['rows'][0]['elements'][i]['duration']['value']
         return Response(serializer.data)
