@@ -94,7 +94,7 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a)) 
     # Radius of earth in kilometers is 6371
     km = 6371* c
-    return round(km, 2)
+    return round(km+km*0.1, 2)
 
 class OrderRequestApi(APIView):
     permission_classes = (permissions.IsAuthenticated,)
