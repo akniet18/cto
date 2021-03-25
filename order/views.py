@@ -108,20 +108,20 @@ class OrderRequestApi(APIView):
         dest = ""
         distance = []
         for i in orq:
-            dest += i.cto.cto_lat+","+i.cto.cto_lng+"|"
+            # dest += i.cto.cto_lat+","+i.cto.cto_lng+"|"
             a = haversine(lng, lat, i.cto.cto_lng, i.cto.cto_lat)
             distance.append(a)
         # print(orig)
-        origins = f'{lat},{lng}'
-        url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={origins}&destinations={dest}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
+        # origins = f'{lat},{lng}'
+        # url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={origins}&destinations={dest}&key=AIzaSyDSQJSfSkaBOGnW94XlDQgn3TzySzfM1W4'
         # print(dest)
-        r = requests.post(url)
+        # r = requests.post(url)
         # print(r.json())
         for i in range(len(serializer.data)):
-            serializer.data[i]['distance_text']  = r.json()['rows'][0]['elements'][i]['distance']['text']
+            # serializer.data[i]['distance_text']  = r.json()['rows'][0]['elements'][i]['distance']['text']
             # serializer.data[i]['distance']  = r.json()['rows'][0]['elements'][i]['distance']['value']
-            serializer.data[i]['distance']  = distance[i]
-            serializer.data[i]['duration_text']  = r.json()['rows'][0]['elements'][i]['duration']['text']
+            serializer.data[i]['distance_text']  = str(distance[i])
+            # serializer.data[i]['duration_text']  = r.json()['rows'][0]['elements'][i]['duration']['text']
             # serializer.data[i]['duration']  = r.json()['rows'][0]['elements'][i]['duration']['value']
         return Response(serializer.data)
 
