@@ -134,7 +134,7 @@ class RequestDecline(APIView):
         queryset.delete()
 
         text = f"Пользователь {queryset.order.owner.nickname} отклонил вашу заявку."
-        send_push(queryset.order.owner, text)
+        send_push(queryset.cto, text)
         Message.objects.create(
             user = queryset.order.owner, text = text
         )
