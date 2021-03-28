@@ -154,7 +154,7 @@ class RequestAccept(APIView):
         OrderRequest.objects.filter(order=queryset.order).delete()
 
         text = f"Пользователь {queryset.order.owner.nickname} принял вашу заявку. Смотрите в активных заказах."
-        send_push(queryset.order.owner, text)
+        send_push(queryset.cto, text)
         Message.objects.create(
             user = queryset.order.owner, text = text
         )
