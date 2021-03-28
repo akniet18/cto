@@ -133,10 +133,10 @@ class RequestDecline(APIView):
         queryset = OrderRequest.objects.get(id=id)
         queryset.delete()
 
-        text = f"Пользователь {queryset.cto.cto_name.upper()} отклонил вашу заявку."
+        text = f"Пользователь {queryset.order.owner.nickname.upper()} отклонил вашу заявку."
         send_push(queryset.cto, text)
         Message.objects.create(
-            user = queryset.order.owner, text = text
+            user = queryset.cto, text = text
         )
         return Response({'status': 'ok'})
 
@@ -153,10 +153,10 @@ class RequestAccept(APIView):
         queryset.order.save()
         OrderRequest.objects.filter(order=queryset.order).delete()
 
-        text = f"Пользователь {queryset.cto.cto_name.upper()} принял вашу заявку. Смотрите в активных заказах."
+        text = f"Пользователь {queryset.order.owner.nickname.upper()} принял вашу заявку. Смотрите в активных заказах."
         send_push(queryset.cto, text)
         Message.objects.create(
-            user = queryset.order.owner, text = text
+            user = queryset.cto, text = text
         )
         return Response({'status': 'ok'})
 
