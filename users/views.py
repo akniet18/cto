@@ -309,7 +309,7 @@ class getMessages(APIView):
     permission_classes = [permissions.IsAuthenticated,]
 
     def get(self, request):
-        m = Message.objects.filter(user = request.user).reverse()
+        m = Message.objects.filter(user = request.user).order_by('-id')
         s = MessageSer(m, many=True)
         return Response(s.data)
 
