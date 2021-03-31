@@ -211,7 +211,7 @@ class OrderList(APIView):
             return Response(s.errors)
 
     def delete(self, request):
-        s = OrderListSer(data=request.data)
+        s = OrderIdSer(data=request.data)
         if s.is_valid():
             Order.objects.get(id=s.validated_data['id']).delete()
             return Response({'status':'ok'})

@@ -72,6 +72,9 @@ class OrderListSer(serializers.ModelSerializer):
         model = Order
         fields = ('id', 'about', 'service', 'subservice')
 
+class OrderIdSer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
 
 class LatLngSer(serializers.Serializer):
     lat = serializers.CharField()
