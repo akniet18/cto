@@ -72,7 +72,7 @@ class OrderListSer(serializers.ModelSerializer):
         model = Order
         fields = ('id', 'about', 'service', 'subservice')
 
-class OrderIdSer(serializers.ModelSerializer):
+class OrderIdSer(serializers.Serializer):
     id = serializers.IntegerField()
 
 
