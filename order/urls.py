@@ -11,7 +11,7 @@ urlpatterns = [
     path('decline/<id>', RequestDecline.as_view()),
     path('accept/<id>', RequestAccept.as_view()),
     path('list/', OrderList.as_view()),
-    path('delete', DeleteOrder.as_view()),
+    path('delete/<id>', DeleteOrder.as_view()),
     path('img/delete/', OrderImgDelete.as_view()),
 
     path('finish/<id>', FinishOrder.as_view()),

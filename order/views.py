@@ -213,14 +213,11 @@ class OrderList(APIView):
 
 class DeleteOrder(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    
-    def delete(self, request):
-        s = OrderIdSer(data=request.data)
-        if s.is_valid():
-            Order.objects.get(id=s.validated_data['id']).delete()
-            return Response({'status':'ok'})
-        else:
-            return Response(s.errors)
+
+    def delete(self, request, id):
+        Order.objects.get(id=id).delete()
+        return Response({'status':'ok'})
+ 
 
 
 class OrderImgDelete(APIView):
