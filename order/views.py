@@ -210,6 +210,10 @@ class OrderList(APIView):
         else:
             return Response(s.errors)
 
+
+class DeleteOrder(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
     def delete(self, request):
         s = OrderIdSer(data=request.data)
         if s.is_valid():
