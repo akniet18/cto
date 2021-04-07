@@ -12,7 +12,7 @@ except ImportError:
 	from urllib.parse import quote
 
 # Константы для настройки библиотеки
-SMSC_LOGIN = "bumperala@gmail.com"			# логин клиента
+SMSC_LOGIN = "bumperala"			# логин клиента
 SMSC_PASSWORD = "Aleke224466"	# пароль
 SMSC_POST = False				# использовать метод POST
 SMSC_HTTPS = False				# использовать HTTPS протокол
