@@ -46,7 +46,7 @@ class PhoneCode(APIView):
                 else:
                     PhoneOTP.objects.create(phone=phone, otp=str(rand), nickname=nickname)
             if phone != "+77783579279":
-                smsc.send_sms(phone, "Код подтверждения для bumper-app.kz: "+str(rand), sender="sms")
+                smsc.send_sms(phone, "Код подтверждения для Bumper.kz: "+str(rand), sender="sms")
             return Response({'status': 'ok'})
         else:
             return Response(s.errors)
