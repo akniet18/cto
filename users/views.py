@@ -15,8 +15,9 @@ from utils.compress import compress_image, base64img
 from rest_framework import filters
 import uuid
 from push_notifications.models import APNSDevice, GCMDevice
+from utils.smsc_api import *
 
-# smsc = SMSC()
+smsc = SMSC()
 
 
 class PhoneCode(APIView):
@@ -24,8 +25,8 @@ class PhoneCode(APIView):
 
     def post(self, request):
         s = PhoneS(data=request.data)
-        # rand = random.randint(1000, 9999)
-        rand = "1111"
+        rand = random.randint(1000, 9999)
+        # rand = "1111"
         if s.is_valid():
             nickname = s.validated_data['nickname']
             phone = s.validated_data['phone']
@@ -44,8 +45,8 @@ class PhoneCode(APIView):
                     PhoneOTP.objects.create(phone=phone, otp="1111", nickname=nickname)
                 else:
                     PhoneOTP.objects.create(phone=phone, otp=str(rand), nickname=nickname)
-            # if phone != "+77783579279":
-                # smsc.send_sms(phone, "Код подтверждения для ALU.KZ: "+str(rand), sender="sms")
+            if phone != "+77783579279":
+                smsc.send_sms(phone, "Код подтверждения для bumper-app.kz: "+str(rand), sender="sms")
             return Response({'status': 'ok'})
         else:
             return Response(s.errors)
@@ -197,8 +198,8 @@ class CreateCto(APIView):
                 if l:
                     cto.cto_logo = l
                     cto.save()
+            smsc.send_sms(phone, "Ваш идентификатор: "+str(cto_id), sender="sms")
             s = CTOListSer(cto, context={'request': request})
-            print(cto)    
             return Response(s.data)
         else:
             return Response(s.errors)
